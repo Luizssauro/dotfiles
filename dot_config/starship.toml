@@ -1,3 +1,32 @@
+# format = """
+# [](fg:dir_bg_color)\
+# $directory\
+# [](fg:dir_bg_color bg:git_bg_color)\
+# $git_branch\
+# $git_status\
+# [](fg:git_bg_color bg:code_bg_color)\
+# $buf\
+# $c\
+# $elixir\
+# $elm\
+# $golang\
+# $gradle\
+# $haskell\
+# $java\
+# $julia\
+# $nodejs\
+# $nim\
+# $rust\
+# $scala\
+# [](fg:code_bg_color bg:tool_bg_color)\
+# $kubernetes\
+# $container\
+# $docker_context\
+# [](fg:tool_bg_color bg:character_bg_color)\
+# $cmd_duration\
+# $character
+# """
+
 format = """
 $os\
 $username\
@@ -35,45 +64,95 @@ disabled = false
 style = "bg:#9A348E"
 disabled = false # Disabled by default
 
+
+[aws]
+symbol = "☁️ "
+
+[buf]
+symbol = "󰿘 "
+style = "bg:code_bg_color fg:text_color"
+format = '[ $symbol ($version) ]($style)'
+
+[cmd_duration]
+min_time = 0
+style = "bg:character_bg_color fg:character_text_color"
+format = '[ $duration ]($style)'
+
+[character]
+success_symbol = "[](fg:character_bg_color bg:character_bg_color)[](fg:character_bg_color)"
+error_symbol = "[](fg:character_bg_color bg:character_text_error_color)[](fg:character_text_error_color)"
+
 [directory]
-style = "bg:#DA627D"
-format = "[ $path ]($style)"
+style = "bg:dir_bg_color fg:text_color"
+format = "[ $path $read_only ]($style)"
+home_symbol = "󰟒"
 truncation_length = 3
-truncation_symbol = "…/"
+truncation_symbol = "󰦩 "
+read_only = "󰌾 "
+
+[directory.substitutions]
+"/" = "  "
+
+# [directory]
+# style = "bg:#DA627D"
+# format = "[ $path ]($style)"
+# truncation_length = 3
+# truncation_symbol = "…/"
 
 # Here is how you can shorten some long paths by text replacement
 # similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
+
+# [directory.substitutions]
+# "Documents" = "󰈙 "
+# "Downloads" = " "
+# "Music" = " "
+# "Pictures" = " "
 # Keep in mind that the order matters. For example:
 # "Important Documents" = " 󰈙 "
 # will not be replaced, because "Documents" was already substituted before.
 # So either put "Important Documents" before "Documents" or use the substituted version:
 # "Important 󰈙 " = " 󰈙 "
 
-[aws]
-symbol = "☁️ "
+
+# [docker_context]
+# symbol = "🐳 "
+# style = "bg:#06969A"
+# format = '[ $symbol $context ]($style) $path'
 
 [docker_context]
-symbol = "🐳 "
-style = "bg:#06969A"
+disabled = false
+symbol = " "
+style = "bg:tool_bg_color fg:text_color"
 format = '[ $symbol $context ]($style) $path'
 
+[kubernetes]
+symbol = "󱃾 "
+disabled = false
+format = '[ $symbol $cluster ]($style)'
+style = "bg:tool_bg_color fg:text_color"
+
+# [git_branch]
+# symbol = " "
+# style = "bg:#FCA17D"
+# format = '[ $symbol $branch ]($style)'
+
 [git_branch]
-symbol = " "
-style = "bg:#FCA17D"
+symbol = "󰊢"
+style = "bg:git_bg_color fg:text_color"
 format = '[ $symbol $branch ]($style)'
 
+# [git_status]
+# style = "bg:#FCA17D"
+# format = '[$all_status$ahead_behind ]($style)'
+
 [git_status]
-style = "bg:#FCA17D"
+style = "bg:git_bg_color fg:text_color"
 format = '[$all_status$ahead_behind ]($style)'
 
 [golang]
 symbol = "🐹 "
-style = "bg:#86BBD8"
+# style = "bg:#86BBD8"
+style = "bg:code_bg_color fg:text_color"
 format = '[ $symbol ($version) ]($style)'
 
 [lua]
@@ -84,16 +163,65 @@ symbol = "🐏 "
 
 [nodejs]
 symbol = " "
-style = "bg:#86BBD8"
+# style = "bg:#86BBD8"
+style = "bg:code_bg_color fg:text_color"
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
 symbol = "🦀 "
-style = "bg:#86BBD8"
+# style = "bg:#86BBD8"
+style = "bg:code_bg_color fg:text_color"
 format = '[ $symbol ($version) ]($style)'
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
+# style = "bg:#33658A"
+style = "bg:code_bg_color fg:text_color"
 format = '[ 😎 $time ]($style)'
+
+palette = 'polar_night'
+
+# Nord Polar Night
+[palettes.polar_night]
+dir_bg_color = '#2E3440'
+git_bg_color = '#3B4252'
+code_bg_color = '#434C5E'
+tool_bg_color = '#4C566A'
+text_color = '#D8DEE9'
+character_bg_color = '#D8DEE9'
+character_text_color = '#2E3440'
+character_text_error_color = '#BF616A'
+
+# Nord Snow Storm
+[palettes.snow_storm]
+dir_bg_color = '#ECEFF4'
+git_bg_color = '#E5E9F0'
+code_bg_color = '#D8DEE9'
+tool_bg_color = '#E5E9F0'
+text_color = '#4C566A'
+character_bg_color = '#ECEFF4'
+character_text_color = '#4C566A'
+character_text_error_color = '#BF616A'
+
+# Nord Aurora
+[palettes.aurora]
+dir_bg_color = '#BF616A'
+git_bg_color = '#D08770'
+code_bg_color = '#EBCB8B'
+tool_bg_color = '#A3BE8C'
+text_color = '#4C566A'
+character_bg_color = '#B48EAD'
+character_text_color = '#4C566A'
+character_text_error_color = '#BF616A'
+
+# Nord Frost
+[palettes.frost]
+dir_bg_color = '#5E81AC'
+git_bg_color = '#81A1C1'
+code_bg_color = '#88C0D0'
+tool_bg_color = '#8FBCBB'
+text_color = '#4C566A'
+character_bg_color = '#D8DEE9'
+character_text_color = '#4C566A'
+character_text_error_color = '#BF616A'
