@@ -39,12 +39,12 @@ $git_status\
 $golang\
 $nodejs\
 $rust\
-[](fg:#86BBD8 bg:#06969A)\
-$docker_context\
-[](fg:#06969A bg:#33658A)\
+[](fg:#86BBD8 bg:#33658A)\
 $time\
 [ ](fg:#33658A)\
 """
+# $docker_context\
+# [](fg:#06969A bg:#33658A)\
 
 palette = 'polar_night'
 
@@ -204,6 +204,7 @@ symbol = "🐏 "
 symbol = " "
 style = "bg:#86BBD8"
 #style = "bg:code_bg_color fg:text_color"
+version_format='v${major}'
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
@@ -217,6 +218,6 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
 #style = "bg:code_bg_color fg:text_color"
-format = '[ 😎 $time ]($style)'
+format = '[⌚$time ]($style)'
 
 
